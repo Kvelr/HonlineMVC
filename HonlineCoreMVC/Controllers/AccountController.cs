@@ -13,28 +13,33 @@ using Microsoft.Extensions.Options;
 using HonlineCoreMVC.Models;
 using HonlineCoreMVC.Models.AccountViewModels;
 using HonlineCoreMVC.Services;
+using HonlineCoreMVC.Common.Entities;
+using HonlineCoreMVC.Common.Utility;
 
 namespace HonlineCoreMVC.Controllers
 {
-    [Authorize]
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _roleManager = roleManager;
         }
 
         [TempData]
@@ -220,10 +225,42 @@ namespace HonlineCoreMVC.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Taz = model.Taz,
+                    BirthDate = model.BirthDate,
+                    LoanAmount = model.LoanAmount,
+                    PeriodInMonths = model.PeriodInMonths
+                };
+
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    if (!await _roleManager.RoleExistsAsync(Consts.CustomerEndUser))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole(Consts.CustomerEndUser));
+                    }
+                    if (!await _roleManager.RoleExistsAsync(Consts.AdminUser))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole(Consts.AdminUser));
+                    }
+
+                    // To add user as admin enable this row
+                    //await _userManager.AddToRoleAsync(user, Consts.AdminUser);
+
+                    if (model.isAdmin)
+                    {
+                        await _userManager.AddToRoleAsync(user, Consts.AdminUser);
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, Consts.CustomerEndUser);
+                    }
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

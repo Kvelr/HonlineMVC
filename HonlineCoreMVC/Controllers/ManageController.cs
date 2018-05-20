@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using HonlineCoreMVC.Models;
 using HonlineCoreMVC.Models.ManageViewModels;
 using HonlineCoreMVC.Services;
+using HonlineCoreMVC.Common.Entities;
 
 namespace HonlineCoreMVC.Controllers
 {

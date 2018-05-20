@@ -9,6 +9,31 @@ namespace HonlineCoreMVC.Models.AccountViewModels
     public class RegisterViewModel
     {
         [Required]
+        [Display(Name = "First name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last name")]
+        public string LastName { get; set; }
+
+        [Required]
+        [Display(Name = "Identity number")]
+        public string Taz { get; set; }
+
+        [Required]
+        [Display(Name = "Birth date")]
+        public DateTime BirthDate { get; set; }
+
+        [Required]
+        [Display(Name = "Loan Amount")]
+        [DisplayFormat(DataFormatString = "₪{0:N4}")]
+        public Decimal LoanAmount { get; set; }
+
+        [Required]
+        [Display(Name = "Period in mounths")]
+        public int PeriodInMonths { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
@@ -23,5 +48,7 @@ namespace HonlineCoreMVC.Models.AccountViewModels
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public bool isAdmin { get; set; }
     }
 }

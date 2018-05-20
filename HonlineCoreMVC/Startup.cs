@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using HonlineCoreMVC.Data;
 using HonlineCoreMVC.Models;
 using HonlineCoreMVC.Services;
+using HonlineCoreMVC.Common.Entities;
 
 namespace HonlineCoreMVC
 {

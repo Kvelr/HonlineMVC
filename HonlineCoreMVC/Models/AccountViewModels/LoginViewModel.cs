@@ -18,5 +18,9 @@ namespace HonlineCoreMVC.Models.AccountViewModels
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
+
+        //[Required]
+        //[Display(Name = "Identity number")]
+        //public string Taz { get; set; }
     }
 }

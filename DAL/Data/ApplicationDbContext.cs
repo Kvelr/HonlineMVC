@@ -4,15 +4,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using HonlineCoreMVC.Models;
+using HonlineCoreMVC.Common.Entities;
+using HonlineCoreMVC.Common.Utility;
 
 namespace HonlineCoreMVC.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext :  IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+           optionsBuilder.UseSqlServer(Consts.ConnectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -22,5 +28,6 @@ namespace HonlineCoreMVC.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+        
     }
 }

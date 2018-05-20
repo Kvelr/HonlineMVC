@@ -1,0 +1,51 @@
+﻿<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/AgentDetails.js"></script>
+
+@model IEnumerable<HonlineCoreMVC.Common.DTO.UserDTO>
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<br />
+<h2>Agent back office</h2>
+<hr />
+
+<div class="form-border">
+    <table class="table table-hover table-condensed" id="userDTOTable">
+        <tr>
+            <th hidden>
+                @Html.DisplayNameFor(m => m.FirstOrDefault().Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => m.FirstOrDefault().FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => m.FirstOrDefault().LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => m.FirstOrDefault().Email)
+            </th>
+        </tr>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td hidden>
+                    @Html.DisplayFor(u => user.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(u => user.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(u => user.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(u => user.Email)
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<div id="customerDetailsDiv"></div>
+

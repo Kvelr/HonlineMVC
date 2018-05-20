@@ -1,0 +1,120 @@
+﻿
+@model HonlineCoreMVC.ViewModel.CustomerDetailsViewModel
+
+<br />
+<h2>Customer Details</h2>
+<hr />
+<div class="row" style="padding-bottom:80px;">
+    <div class="col-sm-6">
+        <div class="row">
+            <div class="col-sm-4">
+                <label asp-for="User.FirstName" class="control-label"></label>
+            </div>
+            <div class="col-sm-8" style="padding-bottom:5px;">
+                <input asp-for="User.FirstName" disabled class="form-control" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <label asp-for="User.LastName" class="control-label"></label>
+            </div>
+            <div class="col-sm-8" style="padding-bottom:5px;">
+                <input asp-for="User.LastName" disabled class="form-control" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <label asp-for="User.Taz" class="control-label"></label>
+            </div>
+            <div class="col-sm-8" style="padding-bottom:5px;">
+                <input asp-for="User.Taz" disabled class="form-control" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <label asp-for="User.BirthDate" class="control-label"></label>
+            </div>
+            <div class="col-sm-8" style="padding-bottom:5px;">
+                <input asp-for="User.BirthDate" type="date" disabled class="form-control" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <label asp-for="User.LoanAmount" class="control-label"></label>
+            </div>
+            <div class="col-sm-8" style="padding-bottom:5px;">
+                <input asp-for="User.LoanAmount" disabled class="form-control" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <label asp-for="User.PeriodInMonths" class="control-label"></label>
+            </div>
+            <div class="col-sm-8" style="padding-bottom:5px;">
+                <input asp-for="User.PeriodInMonths" disabled class="form-control" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@if (!Model.LoanPayments.Any())
+{
+    <div class="text-danger">Loan payments not found !!!</div>
+}
+else
+{
+    <div class="form-border">
+        <table class="table table-condensed table-hover">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(m => m.LoanPayments.FirstOrDefault().Index)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.LoanPayments.FirstOrDefault().Balance)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.LoanPayments.FirstOrDefault().MonthyPayment)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.LoanPayments.FirstOrDefault().InterestForMonth)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => m.LoanPayments.FirstOrDefault().PrincipalForMonth)
+                </th>
+            </tr>
+            @foreach (var loanPayment in Model.LoanPayments)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(l => loanPayment.Index)
+                    </td>
+                    <td>
+                        @if (loanPayment.Balance != 0)
+                        {
+                            @Html.DisplayFor(l => loanPayment.Balance)
+                        }
+                    </td>
+                    <td>
+                        @if (loanPayment.MonthyPayment != 0)
+                        {
+                            @Html.DisplayFor(l => loanPayment.MonthyPayment)
+                        }
+                    </td>
+                    <td>
+                        @if (loanPayment.InterestForMonth != 0)
+                        {
+                            @Html.DisplayFor(l => loanPayment.InterestForMonth)
+                        }
+                    </td>
+                    <td>
+                        @if (loanPayment.PrincipalForMonth != 0)
+                        {
+                            @Html.DisplayFor(l => loanPayment.PrincipalForMonth)
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+}
