@@ -1,2 +1,4 @@
 To create new admin, the easyest way is to go to account controller 
-and unmarked line 253
+and unmarked line 253.
+
+to be able to run the app please make sure you have .net core, also you need to changed the connection string.
